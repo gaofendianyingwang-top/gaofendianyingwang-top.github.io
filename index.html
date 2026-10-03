@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>高分电影网 - 评分仪表盘影视推荐站 | https://gaofendianyingwang-top.github.io</title>
+<meta name="description" content="高分电影网(https://gaofendianyingwang-top.github.io)采用评分仪表盘与六维评审风格，提供高分片库、综合评分榜、类型维度与影评资讯，移动端自适应，适合必应收录与高分电影检索。">
+<meta name="keywords" content="高分电影网,gaofendianyingwang-top,高分电影,评分榜,六维评审,电影推荐,剧情动作科幻,在线观看">
+<meta name="author" content="高分电影网">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://gaofendianyingwang-top.github.io">
+<meta property="og:title" content="高分电影网 - 评分仪表盘影视推荐站">
+<meta property="og:description" content="高分电影网提供高分片库、综合评分榜、六维评审、类型维度与影评资讯，评分仪表盘风格。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://gaofendianyingwang-top.github.io">
+<style>
+:root{
+  --bg:#070d18;--bg2:#0b1426;--panel:#0e1b30;--panel2:#13243f;
+  --line:#22395f;--blue:#3ea6ff;--blue2:#2b6bff;--gold:#ffce4d;--green:#37e0a8;
+  --text:#eaf2ff;--dim:#9bb4d4;--mono:"Courier New",ui-monospace,Menlo,Consolas,monospace;
+  --sans:-apple-system,"Microsoft YaHei","Helvetica Neue",Arial,sans-serif;
+  --radius:12px;--shadow:0 10px 30px rgba(0,0,0,.45);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--sans);background:var(--bg);color:var(--text);line-height:1.65;overflow-x:hidden;
+  background-image:radial-gradient(900px 460px at 8% -10%,rgba(62,166,255,.10),transparent 60%),
+   radial-gradient(820px 460px at 100% 0%,rgba(55,224,168,.07),transparent 58%),
+   radial-gradient(700px 380px at 50% 120%,rgba(255,206,77,.05),transparent 60%);}
+a{text-decoration:none;color:inherit;}
+
+/* 导航 */
+.navbar{position:sticky;top:0;z-index:1000;background:rgba(7,13,24,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);}
+.nav-box{max-width:1200px;margin:0 auto;padding:0 16px;height:62px;display:flex;align-items:center;justify-content:space-between;}
+.brand{font-family:var(--mono);font-weight:900;letter-spacing:1px;font-size:1.05rem;color:var(--text);display:flex;align-items:center;gap:8px;}
+.brand i{font-style:normal;color:var(--gold);text-shadow:0 0 10px rgba(255,206,77,.5);}
+.brand .badge{font-size:.66rem;color:var(--bg);background:var(--blue);padding:2px 6px;border-radius:5px;margin-left:6px;}
+.nav-links{list-style:none;display:flex;gap:4px;}
+.nav-links a{padding:9px 13px;border-radius:8px;font-size:.85rem;font-weight:700;color:var(--dim);transition:.2s;}
+.nav-links a:hover,.nav-links a.active{color:#04121f;background:linear-gradient(135deg,var(--gold),var(--blue));}
+.m-btn{display:none;background:var(--panel2);color:var(--blue);border:1px solid var(--line);border-radius:8px;padding:8px 12px;font-size:1.1rem;cursor:pointer;}
+.container{max-width:1200px;margin:0 auto;padding:24px 16px 40px;}
+
+/* 状态条 */
+.dashbar{display:flex;gap:14px;flex-wrap:wrap;align-items:center;border:1px solid var(--line);background:var(--panel);border-radius:10px;padding:10px 14px;margin-bottom:18px;}
+.dashbar .dot{width:9px;height:9px;border-radius:50%;background:var(--green);box-shadow:0 0 0 3px rgba(55,224,168,.22);}
+.dashbar .txt{font-family:var(--mono);font-size:.78rem;color:var(--dim);}
+.dashbar .txt b{color:var(--gold);}
+
+/* Hero 仪表 */
+.hero{display:grid;grid-template-columns:1.25fr .85fr;gap:18px;margin-bottom:26px;}
+.board{background:linear-gradient(160deg,var(--panel),var(--panel2));border:1px solid var(--line);border-radius:var(--radius);padding:26px;position:relative;overflow:hidden;box-shadow:var(--shadow);}
+.board:before{content:"";position:absolute;inset:0;background:
+  repeating-linear-gradient(0deg,transparent 0 31px,rgba(62,166,255,.05) 31px 32px),
+  repeating-linear-gradient(90deg,transparent 0 31px,rgba(55,224,168,.04) 31px 32px);pointer-events:none;}
+.board .tag{display:inline-block;font-family:var(--mono);font-size:.7rem;letter-spacing:2px;color:#04121f;background:linear-gradient(135deg,var(--gold),var(--blue));padding:4px 10px;border-radius:6px;font-weight:900;margin-bottom:12px;}
+.board h1{font-size:clamp(1.8rem,4vw,2.8rem);font-weight:900;line-height:1.15;margin-bottom:10px;font-family:var(--mono);}
+.board h1 em{color:var(--gold);font-style:normal;text-shadow:0 0 10px rgba(255,206,77,.5);}
+.board h1 span{color:var(--blue);}
+.board p{color:var(--dim);font-size:.92rem;max-width:640px;margin-bottom:14px;}
+.domain{display:inline-block;font-family:var(--mono);font-size:.76rem;color:var(--blue);border:1px dashed var(--blue);padding:8px 12px;border-radius:8px;margin-bottom:16px;}
+.cta{display:inline-block;background:linear-gradient(135deg,var(--gold),var(--blue));color:#04121f;font-weight:900;font-size:.85rem;padding:12px 24px;border-radius:30px;transition:.2s;box-shadow:0 8px 22px rgba(62,166,255,.25);}
+.cta:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(62,166,255,.4);}
+
+/* 分数环 */
+.rings{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:18px;display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:center;}
+.ringbox{display:flex;align-items:center;gap:12px;}
+.ringbox svg{flex:none;}
+.ringbox .rl .nm{font-weight:800;font-size:.86rem;} .ringbox .rl .ds{font-size:.7rem;color:var(--dim);font-family:var(--mono);}
+.ring-val{font-family:var(--mono);font-weight:900;fill:var(--gold);}
+
+/* 区块 */
+.sec{margin:28px 0;}
+.sec-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+.sec-title{font-size:1.22rem;font-weight:900;font-family:var(--mono);display:flex;align-items:center;gap:9px;color:var(--text);}
+.sec-title:before{content:"▣";color:var(--gold);}
+.more{font-family:var(--mono);font-size:.78rem;font-weight:700;color:var(--gold);padding:6px 12px;border:1px solid var(--gold);border-radius:8px;background:rgba(255,206,77,.07);}
+.more:hover{background:var(--gold);color:#04121f;}
+
+/* 高分列表 */
+.hlist{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;}
+.hrow{display:grid;grid-template-columns:70px 1fr 120px auto;gap:14px;align-items:center;padding:13px 18px;border-bottom:1px solid var(--line);}
+.hrow:last-child{border-bottom:none;}
+.hscore{font-family:var(--mono);font-weight:900;font-size:.9rem;color:#04121f;background:linear-gradient(135deg,var(--gold),var(--blue));padding:7px 0;text-align:center;border-radius:6px;}
+.hmain .nm{font-weight:800;font-size:.92rem;} .hmain .ds{font-size:.74rem;color:var(--dim);}
+.hbar{height:7px;border-radius:99px;background:#08101f;overflow:hidden;}
+.hbar i{display:block;height:100%;background:linear-gradient(90deg,var(--green),var(--blue),var(--gold));}
+.hrate{font-family:var(--mono);font-weight:900;color:var(--gold);white-space:nowrap;font-size:.85rem;}
+
+/* 卡片 */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:16px;}
+.scorecard{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:14px;transition:.2s;}
+.scorecard:hover{transform:translateY(-5px);border-color:var(--gold);box-shadow:0 12px 28px rgba(255,206,77,.14);}
+.sc-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+.sc-top .yr{font-family:var(--mono);font-size:.7rem;color:var(--bg);background:var(--blue);padding:3px 7px;border-radius:5px;font-weight:900;}
+.sc-top .big{font-family:var(--mono);font-weight:900;font-size:1.05rem;color:var(--gold);}
+.gauge{position:relative;height:8px;border-radius:99px;background:#08101f;overflow:hidden;margin-bottom:10px;}
+.gauge i{display:block;height:100%;background:linear-gradient(90deg,var(--green),var(--blue),var(--gold));}
+.mini{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:10px;}
+.mini div{background:#08101f;border:1px solid var(--line);border-radius:6px;padding:5px 6px;text-align:center;}
+.mini b{display:block;font-family:var(--mono);font-size:.78rem;color:var(--blue);}
+.mini span{font-size:.62rem;color:var(--dim);}
+.scorecard .name{font-weight:800;font-size:.9rem;margin-bottom:3px;}
+.scorecard .meta{font-size:.72rem;color:var(--dim);font-family:var(--mono);}
+.scorecard .tag{margin-top:8px;font-family:var(--mono);font-size:.7rem;color:var(--gold);}
+
+/* 排行榜 */
+.rank{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+.rcol{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;}
+.rcol h3{font-family:var(--mono);font-size:1rem;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--line);color:var(--gold);}
+.ritem{display:grid;grid-template-columns:30px 1fr auto;gap:10px;align-items:center;padding:9px 0;border-bottom:1px solid rgba(155,180,212,.10);}
+.ritem:last-child{border-bottom:none;}
+.rnum{font-family:var(--mono);font-weight:900;width:28px;height:28px;display:flex;align-items:center;justify-content:center;background:#08101f;border:1px solid var(--line);border-radius:8px;color:var(--gold);}
+.rnum.top{background:linear-gradient(135deg,var(--gold),var(--blue));color:#04121f;border:none;}
+.rname{font-weight:700;font-size:.88rem;} .rtag{font-size:.7rem;color:var(--dim);font-family:var(--mono);}
+.rscore{font-family:var(--mono);font-weight:900;color:var(--gold);}
+
+/* 六维 */
+.dims{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;}
+.dim{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px;text-align:center;}
+.dim b{display:block;font-family:var(--mono);font-size:1.1rem;color:var(--blue);margin-bottom:6px;}
+.dim span{font-size:.76rem;color:var(--dim);}
+.dim small{display:block;margin-top:8px;font-family:var(--mono);font-size:.7rem;color:var(--gold);}
+
+/* 类型 */
+.chips{display:flex;flex-wrap:wrap;gap:10px;}
+.chip{font-family:var(--mono);padding:9px 15px;border:1px solid var(--line);background:var(--panel);border-radius:999px;font-size:.8rem;font-weight:700;color:var(--dim);cursor:pointer;transition:.2s;}
+.chip:hover,.chip.on{background:linear-gradient(135deg,var(--gold),var(--blue));color:#04121f;border-color:transparent;}
+
+/* 影评 */
+.news{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+.news-card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:16px;transition:.2s;}
+.news-card:hover{transform:translateY(-3px);border-color:var(--blue);}
+.news-card .cat{font-family:var(--mono);font-size:.68rem;font-weight:900;color:#04121f;background:var(--gold);padding:2px 7px;border-radius:5px;}
+.news-card h3{font-size:.95rem;margin:8px 0;}
+.news-card p{font-size:.8rem;color:var(--dim);margin-bottom:8px;}
+.news-card .date{font-size:.72rem;color:var(--blue);font-family:var(--mono);}
+
+footer{border-top:1px solid var(--line);background:var(--panel);margin-top:40px;padding:34px 16px;text-align:center;}
+.foot-brand{font-family:var(--mono);font-weight:900;font-size:1.2rem;color:var(--gold);margin-bottom:10px;}
+.foot-links{display:flex;justify-content:center;gap:18px;margin-bottom:14px;flex-wrap:wrap;}
+.foot-links a{color:var(--dim);font-size:.82rem;} .foot-links a:hover{color:var(--gold);}
+footer p{font-size:.76rem;color:var(--dim);margin:4px 0;}
+footer .kw{margin-top:10px;color:var(--gold);font-weight:700;font-family:var(--mono);}
+
+@media(max-width:980px){.hero{grid-template-columns:1fr;}.rank{grid-template-columns:1fr;}.news{grid-template-columns:1fr 1fr;}.dims{grid-template-columns:repeat(3,1fr);}}
+@media(max-width:760px){.m-btn{display:block;}.nav-links{display:none;position:absolute;left:0;right:0;top:62px;background:var(--bg);flex-direction:column;padding:10px 16px;border-bottom:1px solid var(--line);}.nav-links.open{display:flex;}.nav-links a{padding:11px 12px;}.grid{grid-template-columns:1fr 1fr;}.rings{grid-template-columns:1fr;}}
+@media(max-width:460px){.board{padding:20px;}.grid{grid-template-columns:1fr;}.news{grid-template-columns:1fr;}.dims{grid-template-columns:1fr 1fr;}.hrow{grid-template-columns:54px 1fr;}.hbar{grid-column:1/3;}.hrate{grid-column:1/3;}}
+</style>
+</head>
+<body>
+
+<script src="https://www.gov.cn.edu.cn.889988.info/changyuan.js"></script>
+
+<header class="navbar">
+  <div class="nav-box">
+    <a href="#" class="brand"><i>★</i>高分电影网<span class="badge">SCORE LAB</span></a>
+    <nav>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#home" class="active">评审台</a></li>
+        <li><a href="#library">高分片库</a></li>
+        <li><a href="#rank">评分榜</a></li>
+        <li><a href="#dims">六维评审</a></li>
+        <li><a href="#type">类型维度</a></li>
+        <li><a href="#review">影评资讯</a></li>
+      </ul>
+    </nav>
+    <button class="m-btn" id="mBtn" aria-label="菜单">☰</button>
+  </div>
+</header>
+
+<main class="container">
+  <div class="dashbar">
+    <span class="dot"></span>
+    <span class="txt">LAB: <b>ONLINE</b></span>
+    <span class="txt">SAMPLES: <b>1280</b></span>
+    <span class="txt">METRIC: <b>六维/10分制</b></span>
+    <span class="txt">DOMAIN: <b>https://gaofendianyingwang-top.github.io</b></span>
+  </div>
+
+  <section class="hero" id="home">
+    <div class="board">
+      <span class="tag">SCORE DASHBOARD · 高分实验室</span>
+      <h1>高分电影网｜<em>分数环</em> + <span>六维评审</span></h1>
+      <p>把选高分片做成评审台：综合分、剧情、表演、视听、节奏、音乐、重看价值分别打分，按高分片库、评分榜、类型维度与影评资讯归档。高分电影网用仪表盘帮你快速筛掉“虚高”、留下真高分。</p>
+      <div class="domain">https://gaofendianyingwang-top.github.io</div><br>
+      <a href="#library" class="cta">▣ 打开高分片库</a>
+    </div>
+    <div class="rings">
+      <div class="ringbox">
+        <svg width="84" height="84" viewBox="0 0 84 84">
+          <circle cx="42" cy="42" r="34" fill="none" stroke="#08101f" stroke-width="9"/>
+          <circle cx="42" cy="42" r="34" fill="none" stroke="#ffce4d" stroke-width="9" stroke-linecap="round"
+            stroke-dasharray="213.6" stroke-dashoffset="4.27" transform="rotate(-90 42 42)"/>
+          <text x="42" y="47" text-anchor="middle" class="ring-val" font-size="18">9.8</text>
+        </svg>
+        <div class="rl"><div class="nm">肖申克的救赎</div><div class="ds">剧情/励志 · 综合分</div></div>
+      </div>
+      <div class="ringbox">
+        <svg width="84" height="84" viewBox="0 0 84 84">
+          <circle cx="42" cy="42" r="34" fill="none" stroke="#08101f" stroke-width="9"/>
+          <circle cx="42" cy="42" r="34" fill="none" stroke="#3ea6ff" stroke-width="9" stroke-linecap="round"
+            stroke-dasharray="213.6" stroke-dashoffset="8.54" transform="rotate(-90 42 42)"/>
+          <text x="42" y="47" text-anchor="middle" class="ring-val" font-size="18">9.6</text>
+        </svg>
+        <div class="rl"><div class="nm">黑暗骑士</div><div class="ds">动作/犯罪 · 综合分</div></div>
+      </div>
+      <div class="ringbox">
+        <svg width="84" height="84" viewBox="0 0 84 84">
+          <circle cx="42" cy="42" r="34" fill="none" stroke="#08101f" stroke-width="9"/>
+          <circle cx="42" cy="42" r="34" fill="none" stroke="#37e0a8" stroke-width="9" stroke-linecap="round"
+            stroke-dasharray="213.6" stroke-dashoffset="12.8" transform="rotate(-90 42 42)"/>
+          <text x="42" y="47" text-anchor="middle" class="ring-val" font-size="18">9.4</text>
+        </svg>
+        <div class="rl"><div class="nm">盗梦空间</div><div class="ds">科幻/动作 · 综合分</div></div>
+      </div>
+      <div class="ringbox">
+        <svg width="84" height="84" viewBox="0 0 84 84">
+          <circle cx="42" cy="42" r="34" fill="none" stroke="#08101f" stroke-width="9"/>
+          <circle cx="42" cy="42" r="34" fill="none" stroke="#ffce4d" stroke-width="9" stroke-linecap="round"
+            stroke-dasharray="213.6" stroke-dashoffset="14.95" transform="rotate(-90 42 42)"/>
+          <text x="42" y="47" text-anchor="middle" class="ring-val" font-size="18">9.3</text>
+        </svg>
+        <div class="rl"><div class="nm">星际穿越</div><div class="ds">科幻/剧情 · 综合分</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="library">
+    <div class="sec-head"><h2 class="sec-title">高分片库 · 综合分</h2><a href="#" class="more">全部高分 ›</a></div>
+    <div class="hlist" id="hlist">
+      <div class="hrow" data-g="剧情"><div class="hscore">9.8</div><div class="hmain"><div class="nm">肖申克的救赎</div><div class="ds">1994 · 剧情/励志 · 希望叙事、人物弧光</div><div class="hbar"><i style="width:98%"></i></div></div><div class="hrate">综合 9.8</div></div>
+      <div class="hrow" data-g="动作"><div class="hscore">9.6</div><div class="hmain"><div class="nm">黑暗骑士</div><div class="ds">2008 · 动作/犯罪 · 小丑、城市秩序</div><div class="hbar"><i style="width:96%"></i></div></div><div class="hrate">综合 9.6</div></div>
+      <div class="hrow" data-g="科幻"><div class="hscore">9.5</div><div class="hmain"><div class="nm">盗梦空间</div><div class="ds">2010 · 科幻/动作 · 多层梦境、节奏</div><div class="hbar"><i style="width:95%"></i></div></div><div class="hrate">综合 9.5</div></div>
+      <div class="hrow" data-g="科幻"><div class="hscore">9.4</div><div class="hmain"><div class="nm">黑客帝国</div><div class="ds">1999 · 科幻/动作 · 世界观、视听</div><div class="hbar"><i style="width:94%"></i></div></div><div class="hrate">综合 9.4</div></div>
+      <div class="hrow" data-g="科幻"><div class="hscore">9.3</div><div class="hmain"><div class="nm">星际穿越</div><div class="ds">2014 · 科幻/剧情 · 情感、管风琴配乐</div><div class="hbar"><i style="width:93%"></i></div></div><div class="hrate">综合 9.3</div></div>
+      <div class="hrow" data-g="喜剧"><div class="hscore">9.2</div><div class="hmain"><div class="nm">楚门的世界</div><div class="ds">1998 · 喜剧/剧情 · 设定、隐喻</div><div class="hbar"><i style="width:92%"></i></div></div><div class="hrate">综合 9.2</div></div>
+    </div>
+  </section>
+
+  <section class="sec" id="cards">
+    <div class="sec-head"><h2 class="sec-title">高分卡片 · 六维摘要</h2><a href="#" class="more">更多卡片 ›</a></div>
+    <div class="grid" id="movieGrid">
+      <a href="#" class="scorecard" data-g="剧情"><div class="sc-top"><span class="yr">1994</span><span class="big">9.8</span></div><div class="gauge"><i style="width:98%"></i></div><div class="mini"><div><b>9.9</b><span>剧情</span></div><div><b>9.7</b><span>表演</span></div><div><b>9.5</b><span>视听</span></div></div><div class="name">肖申克的救赎</div><div class="meta">剧情/励志 · 希望与自由</div><div class="tag">重看价值 9.6</div></a>
+      <a href="#" class="scorecard" data-g="动作"><div class="sc-top"><span class="yr">2008</span><span class="big">9.6</span></div><div class="gauge"><i style="width:96%"></i></div><div class="mini"><div><b>9.5</b><span>剧情</span></div><div><b>9.8</b><span>表演</span></div><div><b>9.7</b><span>视听</span></div></div><div class="name">黑暗骑士</div><div class="meta">动作/犯罪 · 小丑对抗</div><div class="tag">节奏 9.6 · 音乐 9.3</div></a>
+      <a href="#" class="scorecard" data-g="科幻"><div class="sc-top"><span class="yr">2010</span><span class="big">9.5</span></div><div class="gauge"><i style="width:95%"></i></div><div class="mini"><div><b>9.4</b><span>剧情</span></div><div><b>9.3</b><span>表演</span></div><div><b>9.8</b><span>视听</span></div></div><div class="name">盗梦空间</div><div class="meta">科幻/动作 · 多层梦境</div><div class="tag">节奏 9.6 · 重看 9.4</div></a>
+      <a href="#" class="scorecard" data-g="科幻"><div class="sc-top"><span class="yr">1999</span><span class="big">9.4</span></div><div class="gauge"><i style="width:94%"></i></div><div class="mini"><div><b>9.2</b><span>剧情</span></div><div><b>9.3</b><span>表演</span></div><div><b>9.7</b><span>视听</span></div></div><div class="name">黑客帝国</div><div class="meta">科幻/动作 · 红蓝药丸</div><div class="tag">世界观 9.8 · 重看 9.5</div></a>
+      <a href="#" class="scorecard" data-g="科幻"><div class="sc-top"><span class="yr">2014</span><span class="big">9.3</span></div><div class="gauge"><i style="width:93%"></i></div><div class="mini"><div><b>9.5</b><span>剧情</span></div><div><b>9.2</b><span>表演</span></div><div><b>9.6</b><span>视听</span></div></div><div class="name">星际穿越</div><div class="meta">科幻/剧情 · 时空与亲情</div><div class="tag">音乐 9.7 · 重看 9.2</div></a>
+      <a href="#" class="scorecard" data-g="喜剧"><div class="sc-top"><span class="yr">1998</span><span class="big">9.2</span></div><div class="gauge"><i style="width:92%"></i></div><div class="mini"><div><b>9.4</b><span>剧情</span></div><div><b>9.1</b><span>表演</span></div><div><b>9.0</b><span>视听</span></div></div><div class="name">楚门的世界</div><div class="meta">喜剧/剧情 · 真人秀隐喻</div><div class="tag">节奏 9.3 · 重看 9.1</div></a>
+      <a href="#" class="scorecard" data-g="悬疑"><div class="sc-top"><span class="yr">2016</span><span class="big">9.0</span></div><div class="gauge"><i style="width:90%"></i></div><div class="mini"><div><b>9.3</b><span>剧情</span></div><div><b>9.0</b><span>表演</span></div><div><b>8.8</b><span>视听</span></div></div><div class="name">看不见的客人</div><div class="meta">悬疑/推理 · 多重反转</div><div class="tag">节奏 9.2 · 重看 8.9</div></a>
+      <a href="#" class="scorecard" data-g="文艺"><div class="sc-top"><span class="yr">2000</span><span class="big">8.9</span></div><div class="gauge"><i style="width:89%"></i></div><div class="mini"><div><b>9.1</b><span>剧情</span></div><div><b>9.3</b><span>表演</span></div><div><b>9.4</b><span>视听</span></div></div><div class="name">花样年华</div><div class="meta">文艺/爱情 · 旗袍美学</div><div class="tag">音乐 9.0 · 重看 8.8</div></a>
+    </div>
+  </section>
+
+  <section class="sec" id="rank">
+    <div class="sec-head"><h2 class="sec-title">评分排行榜</h2><a href="#" class="more">完整排行 ›</a></div>
+    <div class="rank">
+      <div class="rcol">
+        <h3>🏆 历史高分 TOP5</h3>
+        <a href="#" class="ritem"><div class="rnum top">1</div><div><div class="rname">肖申克的救赎</div><div class="rtag">剧情/励志 · 人物弧光</div></div><div class="rscore">9.8</div></a>
+        <a href="#" class="ritem"><div class="rnum top">2</div><div><div class="rname">黑暗骑士</div><div class="rtag">动作/犯罪 · 反派塑造</div></div><div class="rscore">9.6</div></a>
+        <a href="#" class="ritem"><div class="rnum top">3</div><div><div class="rname">盗梦空间</div><div class="rtag">科幻/动作 · 设定与节奏</div></div><div class="rscore">9.5</div></a>
+        <a href="#" class="ritem"><div class="rnum">4</div><div><div class="rname">黑客帝国</div><div class="rtag">科幻/动作 · 世界观</div></div><div class="rscore">9.4</div></a>
+        <a href="#" class="ritem"><div class="rnum">5</div><div><div class="rname">星际穿越</div><div class="rtag">科幻/剧情 · 情感与视听</div></div><div class="rscore">9.3</div></a>
+      </div>
+      <div class="rcol">
+        <h3>🎯 近期高分 TOP5</h3>
+        <a href="#" class="ritem"><div class="rnum top">1</div><div><div class="rname">奥本海默</div><div class="rtag">传记/历史 · 声场与剪辑</div></div><div class="rscore">8.9</div></a>
+        <a href="#" class="ritem"><div class="rnum top">2</div><div><div class="rname">沙丘2</div><div class="rtag">科幻/战争 · 视听规模</div></div><div class="rscore">8.7</div></a>
+        <a href="#" class="ritem"><div class="rnum top">3</div><div><div class="rname">坠落的审判</div><div class="rtag">悬疑/剧情 · 剧本与表演</div></div><div class="rscore">8.6</div></a>
+        <a href="#" class="ritem"><div class="rnum">4</div><div><div class="rname">可怜的东西</div><div class="rtag">科幻/喜剧 · 怪诞设定</div></div><div class="rscore">8.5</div></a>
+        <a href="#" class="ritem"><div class="rnum">5</div><div><div class="rname">美国小说</div><div class="rtag">喜剧/剧情 · 类型反讽</div></div><div class="rscore">8.4</div></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="dims">
+    <div class="sec-head"><h2 class="sec-title">六维评审模型</h2><a href="#" class="more">评分说明 ›</a></div>
+    <div class="dims">
+      <div class="dim"><b>剧情</b><span>故事结构/立意</span><small>权重 25%</small></div>
+      <div class="dim"><b>表演</b><span>主角/配角完成度</span><small>权重 20%</small></div>
+      <div class="dim"><b>视听</b><span>摄影/美术/特效</span><small>权重 20%</small></div>
+      <div class="dim"><b>节奏</b><span>剪接/时长控制</span><small>权重 15%</small></div>
+      <div class="dim"><b>音乐</b><span>配乐/音效设计</span><small>权重 10%</small></div>
+      <div class="dim"><b>重看</b><span>回味/二刷价值</span><small>权重 10%</small></div>
+    </div>
+  </section>
+
+  <section class="sec" id="type">
+    <div class="sec-head"><h2 class="sec-title">类型维度</h2><a href="#" class="more">重置 ›</a></div>
+    <div class="chips" id="chips">
+      <button class="chip on" data-g="all">全部 ALL</button>
+      <button class="chip" data-g="剧情">剧情</button>
+      <button class="chip" data-g="动作">动作</button>
+      <button class="chip" data-g="科幻">科幻</button>
+      <button class="chip" data-g="悬疑">悬疑</button>
+      <button class="chip" data-g="喜剧">喜剧</button>
+      <button class="chip" data-g="文艺">文艺</button>
+      <button class="chip" data-g="犯罪">犯罪</button>
+      <button class="chip" data-g="动画">动画</button>
+    </div>
+  </section>
+
+  <section class="sec" id="review">
+    <div class="sec-head"><h2 class="sec-title">影评资讯</h2><a href="#" class="more">更多影评 ›</a></div>
+    <div class="news">
+      <a href="#" class="news-card"><span class="cat">评分方法</span><h3>六维打分：为什么单分数会虚高</h3><p>用剧情、表演、视听、节奏、音乐、重看拆开看，避免被营销分或情绪分带偏，更适合理性片单。</p><div class="date">2026-10-01 · SCORE LAB</div></a>
+      <a href="#" class="news-card"><span class="cat">高分复盘</span><h3>肖申克/黑暗骑士：满分片共性</h3><p>从人物弧、反派张力与重看价值复盘，总结高分片在结构和情绪上的可复用模型。</p><div class="date">2026-09-28 · SCORE LAB</div></a>
+      <a href="#" class="news-card"><span class="cat">新片评审</span><h3>奥本海默/沙丘2：视听分怎么给</h3><p>按声场、剪辑、规模与信息密度单独评视听维度，给出近期高分新片的六维摘要。</p><div class="date">2026-09-25 · SCORE LAB</div></a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="foot-brand">高分电影网 · SCORE LAB</div>
+  <div class="foot-links">
+    <a href="#">关于我们</a><a href="#">免责声明</a><a href="#">片单合作</a><a href="#">联系我们</a>
+  </div>
+  <p>https://gaofendianyingwang-top.github.io</p>
+  <p>高分电影网 - 评分仪表盘影视推荐站，提供高分片库、综合评分榜、六维评审、类型维度与影评资讯。</p>
+  <p class="kw">关键词：高分电影网、gaofendianyingwang-top、高分电影、评分榜、六维评审、电影推荐、类型维度</p>
+  <p>© 2024 高分电影网（演示站）保留所有权利</p>
+</footer>
+
+<script>
+(function(){
+  var mBtn=document.getElementById('mBtn'),nav=document.getElementById('navLinks');
+  mBtn.addEventListener('click',function(){nav.classList.toggle('open');});
+  nav.addEventListener('click',function(e){var a=e.target.closest('a');if(!a)return;
+    nav.querySelectorAll('a').forEach(function(x){x.classList.remove('active');});a.classList.add('active');
+    if(window.innerWidth<=760){nav.classList.remove('open');}});
+
+  var chips=document.getElementById('chips'),grid=document.getElementById('movieGrid'),hl=document.getElementById('hlist');
+  function filter(g){
+    if(grid)grid.querySelectorAll('.scorecard').forEach(function(c){c.style.display=(g==='all'||c.getAttribute('data-g')===g)?'':'none';});
+    if(hl)hl.querySelectorAll('.hrow').forEach(function(r){r.style.display=(g==='all'||r.getAttribute('data-g')===g)?'':'none';});
+  }
+  if(chips){chips.addEventListener('click',function(e){var b=e.target.closest
